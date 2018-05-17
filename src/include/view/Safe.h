@@ -21,7 +21,7 @@ private:
 
   int readIntValue();
   char *readFile(string title);
-  char *readFileNameToSave(string title);
+  char *readFileNameToSave(string title, string sampleFileName);
   Key *readKey(string title);
   Safe(PersistenceType::types type);
 

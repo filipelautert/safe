@@ -306,7 +306,7 @@ void Safe::getDocument()
         return;
     }
 
-    char *fileName = this->readFileNameToSave("In the dialog, select the place to save it. ");
+    char *fileName = this->readFileNameToSave("In the dialog, select the place to save it. ", "output.txt");
     ofstream stream;
     stream.open(fileName, ios::out | ios::binary);
     if (!stream)
@@ -385,10 +385,10 @@ char *Safe::readFile(string title)
     }
 }
 
-char *Safe::readFileNameToSave(string description)
+char *Safe::readFileNameToSave(string description, string sampleFileName)
 {
     cout << description << endl;
-    FILE *f = popen(("zenity --file-selection --save  --filename=\"~/output.pdf\" --title=\"Save as...\" 2>/dev/null"), "r");
+    FILE *f = popen(("zenity --file-selection --save  --filename=\"/tmp/" + sampleFileName + "\" --title=\"Save as...\" 2>/dev/null").c_str(), "r");
     char *fileName = new char[1024];
     fgets(fileName, 1024, f);
     strtok(fileName, "\n");
@@ -427,24 +427,29 @@ void Safe::report()
     cout << "3. XML" << endl;
     int i = this->readIntValue();
 
-    char *fileName = this->readFileNameToSave("Select the export file name in the dialog.");
+    char *fileName = this->readFileNameToSave("Select the export file name in the dialog.",
+                                              (i == 1 ? "file.csv" : (i == 2 ? "file.txt" : "file.xml")));
 
     switch (i)
     {
     case 1:
         this->reportController->findAll(NULL, NULL, CSV, string(fileName));
-        cout << "CSV report generated" << endl << endl;
+        cout << "CSV report generated" << endl
+             << endl;
         break;
     case 2:
         this->reportController->findAll(NULL, NULL, TXT, string(fileName));
-        cout << "TXT report generated" << endl << endl;
+        cout << "TXT report generated" << endl
+             << endl;
         break;
     case 3:
         this->reportController->findAll(NULL, NULL, XML, string(fileName));
-        cout << "XML report generated" << endl << endl;
+        cout << "XML report generated" << endl
+             << endl;
         break;
     default:
-        cout << "Invalid option..." << endl << endl;
+        cout << "Invalid option..." << endl
+             << endl;
         break;
     }
 
