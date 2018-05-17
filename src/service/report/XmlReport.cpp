@@ -2,6 +2,7 @@
 #include "../../include/service/report/AbstractReport.h"
 #include "../../include/service/report/XmlReport.h"
 #include <sstream>
+#include <algorithm>
 
 using namespace std;
 
@@ -35,6 +36,8 @@ void XmlReport::generateReport(string fileName)
         string hl, cc;
         while (getline(headerTags, hl, '|') && getline(content, cc, '|'))
         {
+
+            std::replace( hl.begin(), hl.end(), ' ', '_');
             outputFile << "       <" << hl << ">";
             outputFile << cc;
             outputFile << "</" << hl << ">" << endl;
