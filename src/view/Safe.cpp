@@ -388,7 +388,7 @@ char *Safe::readFile(string title)
 char *Safe::readFileNameToSave(string description)
 {
     cout << description << endl;
-    FILE *f = popen(("zenity --file-selection --save  --filename=/home/filipe/tmp/output.pdf --title=\"Save as...\" 2>/dev/null"), "r");
+    FILE *f = popen(("zenity --file-selection --save  --filename=\"~/output.pdf\" --title=\"Save as...\" 2>/dev/null"), "r");
     char *fileName = new char[1024];
     fgets(fileName, 1024, f);
     strtok(fileName, "\n");
